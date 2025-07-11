@@ -1,0 +1,123 @@
+{
+  "layer": "bot",
+  "spacing": 0,
+  "height": 0,
+  "margin-bottom": 0,
+  "margin-top": 8,
+  "position": "top",
+  "margin-right": 15,
+  "margin-left": 15,
+  "modules-left": [
+    "custom/pacman",
+    "sway/workspaces"
+  ],
+  "modules-center": [
+    "sway/window"
+  ],
+  "modules-right": [
+    "pulseaudio",
+    "bluetooth",
+    "battery",
+    "network",
+    "clock"
+  ],
+
+  //left
+  //Check Update
+  "custom/pacman": {
+    "format": "{}  ",
+    "interval": 3600, // every hour
+    "exec": "(checkupdates;pacman -Qm | aur vercmp) | wc -l", // # of updates
+    "exec-if": "exit 0", // always run; consider advanced run conditions
+    "on-click": "kitty sh -c 'yay; echo Done - Press enter to exit; read'; pkill -SIGRTMIN+8 waybar", // update system
+    "signal": 8,
+    "tooltip": false
+  },
+  //Workspace
+  "sway/workspaces": {
+    "all-outputs": true,
+    "disable-scroll": true,
+    "tooltip": false,
+    "format": " {value} ",
+    "format-window-separator": " | ",
+    "persistent-workspaces": {
+        "⛩️": [],
+        " ": [],
+        " ": [],
+        "🏛️": [],
+        "📜": [],
+    },
+  },
+ 
+  //center
+  //Window
+  "sway/window": {
+	  "format": "{app_id} | {title}",
+    "max-length": 40,
+    "tooltip": false,
+    "icon": true,
+    "icon-size": 14
+  },
+
+  //right
+  
+  //Bluetooth
+  "bluetooth": {
+    "format": " {status}",
+	  "format-connected": " {device_alias}",
+	  "format-connected-battery": " {device_alias} {device_battery_percentage}%",
+    "on-click": "blueman-manager",
+    "tooltip": false,
+  },
+  //Clock
+  "clock": {
+    "format": "  {:%I:%M %p}",
+    "tooltip": false,
+  },
+  //Network
+  "network": {
+    "format-wifi": "{essid}   {bandwidthDownBits}",
+    "format-ethernet": "  {bandwidthDownBits}",
+    "format-disconnected": "No Network 󰤮 ",
+    "interval": 1,
+    "tooltip": false,
+    "on-click": "kitty --class nmwui nmtui"
+  },
+  //Sound
+  "pulseaudio": {
+    "tooltip": false,
+    "format": "{icon} {volume}%",
+    "format-bluetooth": "{icon}  {volume}%",
+    "format-bluetooth-muted": " {icon} ",
+    "format-muted": "婢",
+    "format-icons": {
+      "headphone": "",
+      "headset": "",
+      "default": [
+        "奄",
+        "奔",
+        "墳"
+      ]
+    },
+    "on-click": "pavucontrol",
+    "min-length": 3
+  },
+  //Battery
+  "battery": {
+    "tooltip": false,
+    "states": {
+      "warning": 30,
+      "critical": 15
+    },
+    "format": "{icon} {capacity}%",
+    "format-charging": "󰂄 {capacity}%",
+    "format-plugged": "󰂄 {capacity}%",
+    "format-alt": "{icon} {time}",
+    "format-full": "󱈑 {capacity}%",
+    "format-icons": [
+      "󱊡",
+      "󱊢",
+      "󱊣"
+    ]
+  }
+}
